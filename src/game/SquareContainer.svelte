@@ -59,6 +59,7 @@
   });
   $effect(() => {
     if (!ctx) return;
+    
     countToken;
     Count()
   });
