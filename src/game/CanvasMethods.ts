@@ -1,5 +1,5 @@
 import { config } from "./config";
-import { GetTargetCells, type Cells } from "./MathMethods"
+import { GetForbiddenCells, GetTargetCells, type Cells } from "./MathMethods"
 export type FieldCoordinate = {
   x:number,
   y:number,
@@ -8,7 +8,7 @@ type CtxCoordinate = {
   x:number,
   y:number,
 };
-function getFieldCoordinateFromEvent(event:MouseEvent, canvas:HTMLCanvasElement):FieldCoordinate{
+export function getFieldCoordinateFromEvent(event:MouseEvent, canvas:HTMLCanvasElement):FieldCoordinate{
   const rect = canvas.getBoundingClientRect();
   const x = event.clientX - rect.left;
   const y = event.clientY - rect.top;
@@ -82,6 +82,20 @@ export function drawPoint(canvas: HTMLCanvasElement, coord:FieldCoordinate){
   ctx.arc(ccoord.x, ccoord.y, config.pointWidth, 0, Math.PI * 2);
   ctx.fill();
 };
+export function drawForbiddenPoint(canvas: HTMLCanvasElement, coord:FieldCoordinate){
+  let ctx = canvas.getContext("2d");
+  if (!ctx){
+    return;
+  };
+  if (coord.x>16 || coord.y>16){
+    return;
+  };
+  const ccoord = getCtxCoordinate(coord);
+  ctx.fillStyle = '#ff0000ff';
+  ctx.beginPath();
+  ctx.arc(ccoord.x, ccoord.y, config.pointWidth*2, 0, Math.PI * 2);
+  ctx.fill();
+};
 export function drawLine(canvas: HTMLCanvasElement, fcoord1:FieldCoordinate, fcoord2:FieldCoordinate){
   let ctx = canvas.getContext("2d");
   if (!ctx){
@@ -107,10 +121,18 @@ export function drawTriangel(canvas: HTMLCanvasElement, fcoord1:FieldCoordinate,
   drawLine(canvas, fcoord3, fcoord2);
   drawLine(canvas, fcoord3, fcoord1);
 }
-export function handleCanvasClick(event:MouseEvent, canvas:HTMLCanvasElement, cells:Cells){
-  const fcoord = getFieldCoordinateFromEvent(event, canvas)
-  if (GetTargetCells(cells).length<3){
-    cells[fcoord.y][fcoord.x] = "1";
-    drawPoint(canvas, fcoord);
+export function drawByCells(canvas: HTMLCanvasElement, cells: Cells){
+  let ctx = canvas.getContext("2d");
+  if (!ctx){
+    return;
+  };
+  clear(canvas);
+  const TargetCells = GetTargetCells(cells);
+  for (let TargetCell of TargetCells){
+    drawPoint(canvas, TargetCell)
+  }
+  const ForbiddenCells = GetForbiddenCells(cells);
+  for (let ForbiddenCell of ForbiddenCells){
+    drawForbiddenPoint(canvas, ForbiddenCell)
   }
 };

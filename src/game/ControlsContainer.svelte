@@ -11,11 +11,11 @@
 >
   Отчистить
 </button>
-<button
+<!-- <button
   onclick={onCount}
 >
   Посчитать
-</button>
+</button> -->
 <div>
   Площадь: {square}
 </div>
