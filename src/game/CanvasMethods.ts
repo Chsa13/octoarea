@@ -134,10 +134,38 @@ export function drawLine(canvas: HTMLCanvasElement, fcoord1:FieldCoordinate, fco
   ctx.lineTo(ccoord2.x, ccoord2.y);
   ctx.stroke();
 };
-export function drawTriangel(canvas: HTMLCanvasElement, fcoord1:FieldCoordinate, fcoord2:FieldCoordinate, fcoord3:FieldCoordinate){
+export function drawTriangel(canvas: HTMLCanvasElement, fcoord1:FieldCoordinate, 
+                                                        fcoord2:FieldCoordinate, 
+                                                        fcoord3:FieldCoordinate,
+                                                        type:"normal"|"forbidden"|null){
   drawLine(canvas, fcoord1, fcoord2);
   drawLine(canvas, fcoord3, fcoord2);
   drawLine(canvas, fcoord3, fcoord1);
+  let color = "";
+  if (type){
+    if (type == "normal"){color = 'rgba(6, 122, 73, 0.5)'};
+    if (type == "forbidden"){color = 'rgba(255, 0, 0, 0.5)'};
+    fillTriangel(canvas, fcoord1, fcoord2, fcoord3, color)
+  }
+};
+export function fillTriangel(canvas: HTMLCanvasElement, fcoord1:FieldCoordinate, 
+                                                        fcoord2:FieldCoordinate, 
+                                                        fcoord3:FieldCoordinate,
+                                                        color:string){
+  let ctx = canvas.getContext("2d");
+  if (!ctx){
+    return;
+  };
+  const ccoord1 = getCtxCoordinate(fcoord1);
+  const ccoord2 = getCtxCoordinate(fcoord2);
+  const ccoord3 = getCtxCoordinate(fcoord3);
+  ctx.beginPath();
+  ctx.moveTo(ccoord1.x, ccoord1.y);
+  ctx.lineTo(ccoord2.x, ccoord2.y);
+  ctx.lineTo(ccoord3.x, ccoord3.y);
+  ctx.closePath();
+  ctx.fillStyle = color;
+  ctx.fill();
 }
 export function drawByCells(canvas: HTMLCanvasElement, cells: Cells){
   let ctx = canvas.getContext("2d");

@@ -2,17 +2,26 @@
   let {startToken, resetToken, countToken, handleSquare, handleMaxSquare} = $props()
   import { onMount } from "svelte";
   import { config } from "./config";
-  import { drawField, setupCanvas, clear, drawTriangel, drawByCells, drawPoint, getFieldCoordinateFromEvent, type FieldCoordinate, cellsEquality } from "./CanvasMethods";
+  import { drawField, setupCanvas, clear, drawTriangel, drawByCells, drawPoint, getFieldCoordinateFromEvent, type FieldCoordinate, cellsEquality, drawForbiddenPoint } from "./CanvasMethods";
   import { checkForbiddenCellsNotInTriangelFromCells, clearTargetCells, generateCells, GenerateForbiddenCells, GetForbiddenCells, GetMaxSquare, getSquareFromCoordinates, GetTargetCells, type Cells } from "./MathMethods";
   let canvas:HTMLCanvasElement;
   let ctx: CanvasRenderingContext2D | null = null
   let cells: Cells = generateCells();
   function Count(){
+    // const ForbiddenCells = GetForbiddenCells(cells);
+    clear(canvas);
+    drawByCells(canvas, cells);
+    // drawForbiddenPoint
     let targetCells = GetTargetCells(cells);
-    if (targetCells.length == 3 && checkForbiddenCellsNotInTriangelFromCells(cells)){
-        let square = getSquareFromCoordinates(targetCells[0], targetCells[1], targetCells[2])
+    if (targetCells.length == 3){
+      if (checkForbiddenCellsNotInTriangelFromCells(cells)){
+        const square = getSquareFromCoordinates(targetCells[0], targetCells[1], targetCells[2])
         handleSquare(square)
-        drawTriangel(canvas, targetCells[0], targetCells[1], targetCells[2]);
+        drawTriangel(canvas, targetCells[0], targetCells[1], targetCells[2], "normal");
+      } else {
+        handleSquare(0);
+        drawTriangel(canvas, targetCells[0], targetCells[1], targetCells[2], "forbidden");
+      }
     }
   }
   onMount(()=>{
