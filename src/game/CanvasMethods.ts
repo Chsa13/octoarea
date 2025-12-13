@@ -1,0 +1,116 @@
+import { config } from "./config";
+import { GetTargetCells, type Cells } from "./MathMethods"
+export type FieldCoordinate = {
+  x:number,
+  y:number,
+};
+type CtxCoordinate = {
+  x:number,
+  y:number,
+};
+function getFieldCoordinateFromEvent(event:MouseEvent, canvas:HTMLCanvasElement):FieldCoordinate{
+  const rect = canvas.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+  const cellX = Math.floor(x / config.cellSize);
+  const cellY = Math.floor(y / config.cellSize);
+  return {x: cellX, y: cellY}
+};
+function getCtxCoordinate(fcoord:FieldCoordinate):CtxCoordinate{
+  return {
+    x: fcoord.x*config.cellSize + config.cellSize/2,
+    y: fcoord.y*config.cellSize + config.cellSize/2
+  };
+};
+export function setupCanvas(canvas: HTMLCanvasElement, width: number, height: number) {
+  const dpr = (window.devicePixelRatio || 1)*3;
+
+  // логический размер (как ты хочешь видеть в макете)
+  canvas.style.width = width + 'px';
+  canvas.style.height = height + 'px';
+
+  // реальный размер в пикселях с учётом DPR
+  canvas.width = width * dpr;
+  canvas.height = height * dpr;
+
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return null;
+  ctx.scale(dpr, dpr);
+
+  return ctx;
+}
+export function drawField(canvas:HTMLCanvasElement){
+  let ctx = canvas.getContext("2d");
+  if (!ctx){
+    return;
+  };
+  ctx.fillStyle = "#ffffffff";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  for (let y = 0; y<=config.fieldHeight; y++){
+    const py = y * config.cellSize;
+    ctx.strokeStyle = "#000"
+    ctx.lineWidth = config.lineWidth;
+    ctx.beginPath();
+    ctx.moveTo(0, py);
+    ctx.lineTo(canvas.width, py);
+    ctx.stroke();
+  };
+  for (let x = 0; x<=config.fieldWidth; x++){
+    const px = x * config.cellSize;
+    ctx.strokeStyle = "#000"
+    ctx.lineWidth = config.lineWidth;
+    ctx.beginPath();
+    ctx.moveTo(px, 0);
+    ctx.lineTo(px, canvas.height);
+    ctx.stroke();
+  };
+};
+export function clear(canvas:HTMLCanvasElement){
+  drawField(canvas)
+};
+export function drawPoint(canvas: HTMLCanvasElement, coord:FieldCoordinate){
+  let ctx = canvas.getContext("2d");
+  if (!ctx){
+    return;
+  };
+  if (coord.x>16 || coord.y>16){
+    return;
+  };
+  const ccoord = getCtxCoordinate(coord);
+  ctx.fillStyle = '#000';
+  ctx.beginPath();
+  ctx.arc(ccoord.x, ccoord.y, config.pointWidth, 0, Math.PI * 2);
+  ctx.fill();
+};
+export function drawLine(canvas: HTMLCanvasElement, fcoord1:FieldCoordinate, fcoord2:FieldCoordinate){
+  let ctx = canvas.getContext("2d");
+  if (!ctx){
+    return;
+  }
+  if (fcoord1.x>16 || fcoord1.y>16){
+    return;
+  };
+  if (fcoord2.x>16 || fcoord2.y>16){
+    return;
+  };
+  const ccoord1 = getCtxCoordinate(fcoord1);
+  const ccoord2 = getCtxCoordinate(fcoord2);
+  ctx.strokeStyle = "#000"
+  ctx.lineWidth = config.lineWidth;
+  ctx.beginPath();
+  ctx.moveTo(ccoord1.x, ccoord1.y);
+  ctx.lineTo(ccoord2.x, ccoord2.y);
+  ctx.stroke();
+};
+export function drawTriangel(canvas: HTMLCanvasElement, fcoord1:FieldCoordinate, fcoord2:FieldCoordinate, fcoord3:FieldCoordinate){
+  drawLine(canvas, fcoord1, fcoord2);
+  drawLine(canvas, fcoord3, fcoord2);
+  drawLine(canvas, fcoord3, fcoord1);
+}
+export function handleCanvasClick(event:MouseEvent, canvas:HTMLCanvasElement, cells:Cells){
+  const fcoord = getFieldCoordinateFromEvent(event, canvas)
+  if (GetTargetCells(cells).length<3){
+    cells[fcoord.y][fcoord.x] = "1";
+    drawPoint(canvas, fcoord);
+  }
+};
