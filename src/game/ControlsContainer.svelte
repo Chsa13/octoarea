@@ -1,5 +1,5 @@
 <script lang="ts">
-  let {onStart, onReset, onCount, square, MaxSquare} = $props();
+  let {onInput, onStart, onReset, onCount, onCopy, square, MaxSquare} = $props();
 </script>
 <style>
   .text-cont{
@@ -9,6 +9,7 @@
   }
 </style>
 <div>
+  <input oninput={onInput}>
   <button
     onclick={onStart}
   >
@@ -18,6 +19,11 @@
     onclick={onReset}
   >
     Отчистить
+  </button>
+  <button
+    onclick={onCopy}
+  >
+    Поделиться
   </button>
   <div class = "text-cont">
     <div>

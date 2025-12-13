@@ -1,9 +1,10 @@
 <script lang="ts">
-  let {startToken, resetToken, countToken, handleSquare, handleMaxSquare} = $props()
+  let {getkey, startToken, resetToken, countToken, copyToken, handleSquare, handleMaxSquare} = $props()
   import { onMount } from "svelte";
   import { config } from "./config";
   import { drawField, setupCanvas, clear, drawTriangel, drawByCells, drawPoint, getFieldCoordinateFromEvent, type FieldCoordinate, cellsEquality, drawForbiddenPoint } from "./CanvasMethods";
   import { checkForbiddenCellsNotInTriangelFromCells, clearTargetCells, generateCells, GenerateForbiddenCells, GetForbiddenCells, GetMaxSquare, getSquareFromCoordinates, GetTargetCells, type Cells } from "./MathMethods";
+    import { encodePoints } from "./Coding";
   let canvas:HTMLCanvasElement;
   let ctx: CanvasRenderingContext2D | null = null
   let cells: Cells = generateCells();
@@ -44,6 +45,19 @@
     drawByCells(canvas, cells);
   });
   $effect(() => {
+    if (!ctx || !copyToken) return;
+    copyToken;
+    const ForbiddenCells = GetForbiddenCells(cells);
+    for (let ForbiddenCell in ForbiddenCells){
+      const x = ForbiddenCells[ForbiddenCell].x
+      const y = ForbiddenCells[ForbiddenCell].y
+      ForbiddenCells[ForbiddenCell].x = y
+      ForbiddenCells[ForbiddenCell].y = x
+    }
+    const key = encodePoints(ForbiddenCells)
+    navigator.clipboard.writeText(key)
+  });
+  $effect(() => {
     if (!ctx) return;
     countToken;
     Count()
@@ -53,11 +67,13 @@
     startToken;
     clear(canvas)
     cells = generateCells();
-    cells = GenerateForbiddenCells(cells, 16);
-    handleSquare(0)
+    cells = GenerateForbiddenCells(cells, 16, getkey());
+    const ForbiddenCells = GetForbiddenCells(cells);
+    const code = encodePoints(ForbiddenCells);
+    handleSquare(0);
     MaxSquare = GetMaxSquare(cells);
-    handleMaxSquare(MaxSquare)
-    drawByCells(canvas, cells)
+    handleMaxSquare(MaxSquare);
+    drawByCells(canvas, cells);
   });
 function handleCanvasClick(event:MouseEvent, canvas:HTMLCanvasElement, cells:Cells){
   const fcoord = getFieldCoordinateFromEvent(event, canvas)

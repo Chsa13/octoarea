@@ -1,4 +1,5 @@
 import type { FieldCoordinate } from "./CanvasMethods"
+import { encodePoints, decodePoints } from "./Coding";
 import { config } from "./config";
 export type Cells=String[][]
 export function generateCells():Cells{
@@ -44,13 +45,23 @@ export function RandomNumber(start:number, end:number):number{
   const to = Math.max(start, end);
   return from + Math.floor(Math.random() * (to - from + 1));
 }
-export function GenerateForbiddenCells(cells: Cells, quantity:number): Cells{
-  for (let i=0; i<quantity; i++){
-    cells[RandomNumber(0, 15)][RandomNumber(0, 15)] = "-1"
+export function GenerateForbiddenCells(cells: Cells, quantity:number, key:string|null): Cells{
+  console.log(key)
+  if (key){
+    let arr = decodePoints(key)
+    for (let f of arr){
+      cells[f.x][f.y] = '-1'
+    }
+  } else {
+    let arr:FieldCoordinate[]=[]
+    for (let i=0; i<quantity; i++){
+      const x = RandomNumber(0, 15)
+      const y = RandomNumber(0, 15)
+      cells[x][y] = "-1"
+      arr.push({x:x, y:y})
+    }
+    console.log(encodePoints(arr))
   }
-  // cells[5][7] = "-1";
-  // cells[9][2] = "-1";
-  // cells[15][9] = "-1";
   return cells
 }
 function checkForbiddenCellNotInTriangel( ForbiddenCell:FieldCoordinate, 
@@ -89,6 +100,7 @@ export function clearTargetCells(cells: Cells): Cells{
   return cells
 }
 export function GetMaxSquare(cells: Cells): number{
+  // console.time("a")
   let ans: number = 0;
   let dots: FieldCoordinate[]= [];
   const ForbiddenCells = GetForbiddenCells(cells);
@@ -120,6 +132,7 @@ export function GetMaxSquare(cells: Cells): number{
       };
     };
   };
+  // console.timeEnd("a")
   console.log(dots)
   return ans;
 }
