@@ -7,15 +7,19 @@
   let canvas:HTMLCanvasElement;
   let ctx: CanvasRenderingContext2D | null = null
   let cells: Cells = generateCells();
+  let MaxSquare = 0;
   function Count(){
-    // const ForbiddenCells = GetForbiddenCells(cells);
     clear(canvas);
     drawByCells(canvas, cells);
-    // drawForbiddenPoint
     let targetCells = GetTargetCells(cells);
     if (targetCells.length == 3){
       if (checkForbiddenCellsNotInTriangelFromCells(cells)){
         const square = getSquareFromCoordinates(targetCells[0], targetCells[1], targetCells[2])
+        if (MaxSquare == square){
+          handleSquare(square)
+          drawTriangel(canvas, targetCells[0], targetCells[1], targetCells[2], "max");
+
+        }
         handleSquare(square)
         drawTriangel(canvas, targetCells[0], targetCells[1], targetCells[2], "normal");
       } else {
@@ -48,11 +52,10 @@
     startToken;
     clear(canvas)
     cells = generateCells();
-    cells = GenerateForbiddenCells(cells, 8);
+    cells = GenerateForbiddenCells(cells, 16);
     handleSquare(0)
-    const MaxSquare = GetMaxSquare(cells);
+    MaxSquare = GetMaxSquare(cells);
     handleMaxSquare(MaxSquare)
-    console.log(MaxSquare)
     drawByCells(canvas, cells)
   });
   function handleCanvasClick(event:MouseEvent, canvas:HTMLCanvasElement, cells:Cells){
@@ -66,19 +69,25 @@
     Count()
   }
 };
-let draggnig = false;
+let dragging = false;
 let draggnigCell: FieldCoordinate | null;
 function onPointerDown(event: MouseEvent | TouchEvent){
   draggnigCell = getFieldCoordinateFromEvent(event, canvas);
-  draggnig = true
+  const TargetCells = GetTargetCells(cells);
+  dragging = false;
+  for(let TargetCell of TargetCells){
+      if (cellsEquality(TargetCell, draggnigCell)){
+        dragging = true; 
+        break;
+      }
+  }
 }
 function onPointerUp(event: MouseEvent | TouchEvent){
   if (draggnigCell) draggnigCell = null;
-  if (draggnig) draggnig = false
+  if (dragging) dragging = false
 }
 function onPointerMove(event: MouseEvent | TouchEvent){
-  console.log(draggnigCell)
-  if (!draggnigCell) return
+  if (!draggnigCell || !dragging) return
   const currentCell = getFieldCoordinateFromEvent(event, canvas);
   const ForbiddenCells = GetForbiddenCells(cells);
   const TargetCells = GetTargetCells(cells);

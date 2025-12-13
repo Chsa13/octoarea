@@ -111,7 +111,7 @@ export function drawForbiddenPoint(canvas: HTMLCanvasElement, coord:FieldCoordin
   const ccoord = getCtxCoordinate(coord);
   ctx.fillStyle = '#ff0000ff';
   ctx.beginPath();
-  ctx.arc(ccoord.x, ccoord.y, config.pointWidth*3, 0, Math.PI * 2);
+  ctx.arc(ccoord.x, ccoord.y, config.pointWidth, 0, Math.PI * 2);
   ctx.fill();
 };
 export function drawLine(canvas: HTMLCanvasElement, fcoord1:FieldCoordinate, fcoord2:FieldCoordinate){
@@ -137,13 +137,14 @@ export function drawLine(canvas: HTMLCanvasElement, fcoord1:FieldCoordinate, fco
 export function drawTriangel(canvas: HTMLCanvasElement, fcoord1:FieldCoordinate, 
                                                         fcoord2:FieldCoordinate, 
                                                         fcoord3:FieldCoordinate,
-                                                        type:"normal"|"forbidden"|null){
+                                                        type:"normal"|"forbidden"|"max"|null){
   drawLine(canvas, fcoord1, fcoord2);
   drawLine(canvas, fcoord3, fcoord2);
   drawLine(canvas, fcoord3, fcoord1);
   let color = "";
   if (type){
-    if (type == "normal"){color = 'rgba(6, 122, 73, 0.5)'};
+    if (type == "max"){color = 'rgba(154, 255, 128, 0.91)'};
+    if (type == "normal"){color = 'rgba(6, 70, 122, 0.5)'};
     if (type == "forbidden"){color = 'rgba(255, 0, 0, 0.5)'};
     fillTriangel(canvas, fcoord1, fcoord2, fcoord3, color)
   }

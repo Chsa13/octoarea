@@ -10,5 +10,5 @@ export let config: Config={
   fieldHeight:16,
   cellSize:35,
   lineWidth:2,
-  pointWidth:2,
+  pointWidth:4,
 };
