@@ -1,10 +1,11 @@
 <script lang="ts">
-  let {getkey, startToken, resetToken, countToken, copyToken, handleSquare, handleMaxSquare} = $props()
+  let {startToken, newToken, handleSquare, handleMaxSquare} = $props()
   import { onMount } from "svelte";
   import { config } from "./config";
   import { drawField, setupCanvas, clear, drawTriangel, drawByCells, drawPoint, getFieldCoordinateFromEvent, type FieldCoordinate, cellsEquality, drawForbiddenPoint } from "./CanvasMethods";
   import { checkForbiddenCellsNotInTriangelFromCells, clearTargetCells, generateCells, GenerateForbiddenCells, GetForbiddenCells, GetMaxSquare, getSquareFromCoordinates, GetTargetCells, type Cells } from "./MathMethods";
     import { encodePoints } from "./Сoding";
+    import { getQuery, setQuery } from "../lib/queryParams";
   let canvas:HTMLCanvasElement;
   let ctx: CanvasRenderingContext2D | null = null
   let cells: Cells = generateCells();
@@ -30,47 +31,84 @@
     }
   }
   onMount(()=>{
-    // updateCellSize()
     ctx = setupCanvas(canvas, config.fieldWidth*config.cellSize, config.fieldHeight*config.cellSize);
     if (!ctx){
       return;
     };
     drawField(canvas);
   });
-  $effect(() => {
-    if (!ctx) return;
-    resetToken;
-    clear(canvas);
-    cells = clearTargetCells(cells);
-    drawByCells(canvas, cells);
-  });
-  $effect(() => {
-    if (!ctx || !copyToken) return;
-    copyToken;
+  // $effect(() => {
+  //   if (!ctx) return;
+  //   resetToken;
+  //   clear(canvas);
+  //   cells = clearTargetCells(cells);
+  //   drawByCells(canvas, cells);
+  // });
+  // $effect(() => {
+  //   if (!ctx || !copyToken) return;
+  //   copyToken;
+  //   const ForbiddenCells = GetForbiddenCells(cells);
+  //   for (let ForbiddenCell in ForbiddenCells){
+  //     const x = ForbiddenCells[ForbiddenCell].x
+  //     const y = ForbiddenCells[ForbiddenCell].y
+  //     ForbiddenCells[ForbiddenCell].x = y
+  //     ForbiddenCells[ForbiddenCell].y = x
+  //   }
+  //   const key = encodePoints(ForbiddenCells)
+  //   navigator.clipboard.writeText(key)
+  // });
+//   $effect(() => {
+//     if (!ctx) return;
+// 
+//     countToken;
+//     Count()
+//   });
+  function Start(key:string|null){
+    cells = GenerateForbiddenCells(cells, 16, key);
     const ForbiddenCells = GetForbiddenCells(cells);
-    for (let ForbiddenCell in ForbiddenCells){
+      for (let ForbiddenCell in ForbiddenCells){
       const x = ForbiddenCells[ForbiddenCell].x
       const y = ForbiddenCells[ForbiddenCell].y
       ForbiddenCells[ForbiddenCell].x = y
       ForbiddenCells[ForbiddenCell].y = x
     }
-    const key = encodePoints(ForbiddenCells)
-    navigator.clipboard.writeText(key)
-  });
-  $effect(() => {
-    if (!ctx) return;
-
-    countToken;
-    Count()
-  });
+    const code = encodePoints(ForbiddenCells);
+    handleSquare(0);
+    MaxSquare = GetMaxSquare(cells);
+    handleMaxSquare(MaxSquare);
+    drawByCells(canvas, cells);
+    return code
+  }
   $effect(() => {
     if (!ctx || !startToken) return;
     startToken;
     clear(canvas)
     cells = generateCells();
-    cells = GenerateForbiddenCells(cells, 16, getkey());
+
+    const key = getQuery("k");
+    cells = GenerateForbiddenCells(cells, 16, key);
     const ForbiddenCells = GetForbiddenCells(cells);
     const code = encodePoints(ForbiddenCells);
+    handleSquare(0);
+    MaxSquare = GetMaxSquare(cells);
+    handleMaxSquare(MaxSquare);
+    drawByCells(canvas, cells);
+  });
+  $effect(() => {
+    if (!ctx || !newToken) return;
+    newToken;
+    clear(canvas)
+    cells = generateCells();
+    cells = GenerateForbiddenCells(cells, 16, null);
+    const ForbiddenCells = GetForbiddenCells(cells);
+      for (let ForbiddenCell in ForbiddenCells){
+      const x = ForbiddenCells[ForbiddenCell].x
+      const y = ForbiddenCells[ForbiddenCell].y
+      ForbiddenCells[ForbiddenCell].x = y
+      ForbiddenCells[ForbiddenCell].y = x
+    }
+    const code = encodePoints(ForbiddenCells);
+    setQuery("k", code);
     handleSquare(0);
     MaxSquare = GetMaxSquare(cells);
     // console.log(GetMaxSquare2(cells))
