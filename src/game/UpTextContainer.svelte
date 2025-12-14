@@ -8,6 +8,12 @@
     font-size: 15px;
     padding-bottom: 8px;
   }
+  @media(width<400px){
+    .text-cont{
+      height: 45px;
+      text-align: end;
+    }
+  }
 </style>
 <div>
   <div class = "text-cont">
