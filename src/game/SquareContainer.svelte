@@ -1,5 +1,5 @@
 <script lang="ts">
-  let {startToken, newToken, handleSquare, handleMaxSquare} = $props()
+  let {newToken, handleSquare, handleMaxSquare} = $props()
   import { onMount } from "svelte";
   import { config } from "./config";
   import { drawField, setupCanvas, clear, drawTriangel, drawByCells, drawPoint, getFieldCoordinateFromEvent, type FieldCoordinate, cellsEquality, drawForbiddenPoint } from "./CanvasMethods";
@@ -35,34 +35,12 @@
     if (!ctx){
       return;
     };
-    drawField(canvas);
+    const key = getQuery("k");
+    const code = Start(key);
+    if (!key){
+      setQuery("k", code);
+    }
   });
-  // $effect(() => {
-  //   if (!ctx) return;
-  //   resetToken;
-  //   clear(canvas);
-  //   cells = clearTargetCells(cells);
-  //   drawByCells(canvas, cells);
-  // });
-  // $effect(() => {
-  //   if (!ctx || !copyToken) return;
-  //   copyToken;
-  //   const ForbiddenCells = GetForbiddenCells(cells);
-  //   for (let ForbiddenCell in ForbiddenCells){
-  //     const x = ForbiddenCells[ForbiddenCell].x
-  //     const y = ForbiddenCells[ForbiddenCell].y
-  //     ForbiddenCells[ForbiddenCell].x = y
-  //     ForbiddenCells[ForbiddenCell].y = x
-  //   }
-  //   const key = encodePoints(ForbiddenCells)
-  //   navigator.clipboard.writeText(key)
-  // });
-//   $effect(() => {
-//     if (!ctx) return;
-// 
-//     countToken;
-//     Count()
-//   });
   function Start(key?:string|null|undefined){
     clear(canvas)
     cells = generateCells();
@@ -81,15 +59,15 @@
     drawByCells(canvas, cells);
     return code
   }
-  $effect(() => {
-    if (!ctx || !startToken) return;
-    startToken;
-    const key = getQuery("k");
-    const code = Start(key);
-    if (!key){
-      setQuery("k", code);
-    }
-  });
+  // $effect(() => {
+  //   if (!ctx || !startToken) return;
+  //   startToken;
+  //   const key = getQuery("k");
+  //   const code = Start(key);
+  //   if (!key){
+  //     setQuery("k", code);
+  //   }
+  // });
   $effect(() => {
     if (!ctx || !newToken) return;
     const code = Start();

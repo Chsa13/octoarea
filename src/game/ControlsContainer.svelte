@@ -1,5 +1,5 @@
 <script lang="ts">
-  let {onStart, onNew, square, MaxSquare} = $props();
+  let {onNew, square, MaxSquare} = $props();
 </script>
 <style>
   .text-cont{
@@ -9,11 +9,6 @@
   }
 </style>
 <div>
-  <button
-    onclick={onStart}
-  >
-    Запустить
-  </button>
   <button
     onclick={onNew}
   >
