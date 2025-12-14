@@ -62,7 +62,7 @@ button:active{
   onclick={onCopy}
   title="Будет скопированна сслыка на игру"
   >
-  Поделиться игрой
+  Поделиться раскладом
 </button>
 <div></div>
 <div class = "contb">
