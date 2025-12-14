@@ -1,11 +1,12 @@
 <script lang="ts">
-  let {newToken, handleSquare, handleMaxSquare} = $props()
+  let {newToken,copyToken, handleSquare, handleMaxSquare} = $props()
   import { onMount } from "svelte";
   import { config } from "./config";
   import { drawField, setupCanvas, clear, drawTriangel, drawByCells, drawPoint, getFieldCoordinateFromEvent, type FieldCoordinate, cellsEquality, drawForbiddenPoint } from "./CanvasMethods";
   import { checkForbiddenCellsNotInTriangelFromCells, clearTargetCells, generateCells, GenerateForbiddenCells, GetForbiddenCells, GetMaxSquare, getSquareFromCoordinates, GetTargetCells, type Cells } from "./MathMethods";
-    import { encodePoints } from "./Сoding";
-    import { getQuery, setQuery } from "../lib/queryParams";
+  import { encodePoints } from "./Сoding";
+  import { getQuery, setQuery } from "../lib/queryParams";
+    import { copyText, getCurrentUrl } from "../lib/utils";
   let canvas:HTMLCanvasElement;
   let ctx: CanvasRenderingContext2D | null = null
   let cells: Cells = generateCells();
@@ -59,15 +60,12 @@
     drawByCells(canvas, cells);
     return code
   }
-  // $effect(() => {
-  //   if (!ctx || !startToken) return;
-  //   startToken;
-  //   const key = getQuery("k");
-  //   const code = Start(key);
-  //   if (!key){
-  //     setQuery("k", code);
-  //   }
-  // });
+  $effect(() => {
+    if (!ctx || !copyToken) return;
+    copyToken;
+    const url = getCurrentUrl();
+    copyText(url);
+  });
   $effect(() => {
     if (!ctx || !newToken) return;
     const code = Start();
