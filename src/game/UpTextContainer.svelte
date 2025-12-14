@@ -11,7 +11,7 @@
   @media(width<400px){
     .text-cont{
       height: 45px;
-      text-align: end;
+      align-items: flex-end;
     }
   }
 </style>
