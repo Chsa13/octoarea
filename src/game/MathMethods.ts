@@ -64,6 +64,9 @@ export function GenerateForbiddenCells(cells: Cells, quantity:number, key:string
       arr.push({x:x, y:y})
     }
     console.log(encodePoints(arr))
+    if (arr.length !=16){
+      return GenerateForbiddenCells(cells, quantity, key)
+    }
   }
   return cells
 }
