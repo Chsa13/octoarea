@@ -112,7 +112,7 @@ function onPointerMove(event: MouseEvent | TouchEvent){
   let fl = false;
   if (!dragging){
     for(let TargetCell of TargetCells){
-      if (cellsEquality(TargetCell, currentCell)){canvas.style.cursor = "grab"; fl=True;return}
+      if (cellsEquality(TargetCell, currentCell)){canvas.style.cursor = "grab"; fl=true;return}
     }
   }
   if (dragging){canvas.style.cursor = "grabbing"} 
