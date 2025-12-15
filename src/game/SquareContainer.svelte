@@ -97,6 +97,11 @@ function handleCanvasClick(event:MouseEvent, canvas:HTMLCanvasElement, cells:Cel
 let dragging = false;
 let draggnigCell: FieldCoordinate | null;
 function onPointerDown(event: MouseEvent | TouchEvent){
+  if (isMouseEvent(event)){
+    if (!(event.buttons & 1)){
+      onPointerUp(event);
+    }
+  }
   draggnigCell = getFieldCoordinateFromEvent(event, canvas);
   const TargetCells = GetTargetCells(cells);
   dragging = false;
@@ -110,8 +115,10 @@ function onPointerDown(event: MouseEvent | TouchEvent){
 }
 function onPointerUp(event: MouseEvent | TouchEvent){
   if (draggnigCell) draggnigCell = null;
-  if (dragging) dragging = false
-  canvas.style.cursor = "grab"
+  if (dragging) {
+    dragging = false
+    canvas.style.cursor = "grab"
+  }
 }
 function isMouseEvent(e: Event): e is MouseEvent {
     return e instanceof MouseEvent;
