@@ -183,6 +183,9 @@ export function drawByCells(canvas: HTMLCanvasElement, cells: Cells){
     drawForbiddenPoint(canvas, ForbiddenCell)
   }
 };
-export function cellsEquality(cell1:FieldCoordinate, cell2: FieldCoordinate): boolean{
+export function cellsEquality(cell1:FieldCoordinate|null, cell2: FieldCoordinate|null): boolean{
+  if ((cell1===null || cell2===null) && cell1!=cell2){
+    retrun false;
+  };
   return (cell1.x == cell2.x && cell1.y == cell2.y);
 };
