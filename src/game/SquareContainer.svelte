@@ -39,9 +39,7 @@
     };
     const key = getQuery("k");
     const code = Start(key);
-    if (!key){
-      setQuery("k", code);
-    }
+    setQuery("k", code);
   });
   function Start(key?:string|null|undefined){
     clear(canvas)
