@@ -113,7 +113,16 @@ function onPointerUp(event: MouseEvent | TouchEvent){
   if (dragging) dragging = false
   canvas.style.cursor = "grab"
 }
+function isMouseEvent(e: Event): e is MouseEvent {
+    return e instanceof MouseEvent;
+  }
 function onPointerMove(event: MouseEvent | TouchEvent){
+  if (isMouseEvent(event)){
+    if (!(event.buttons & 1)){
+      onPointerUp(event);
+    }
+
+  }
   const currentCell = getFieldCoordinateFromEvent(event, canvas);
   const ForbiddenCells = GetForbiddenCells(cells);
   const TargetCells = GetTargetCells(cells);  
