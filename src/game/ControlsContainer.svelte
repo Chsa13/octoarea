@@ -45,10 +45,10 @@ button:active{
 </style>
 <div class="cont">
   <div class="row">
-    <button onclick={onNew}>Новая игра</button>
+    <button onclick={onNew}>Новая задача</button>
     <button onclick={onReset}>Начать заново</button>
   </div>
   <div class="row">
-    <button onclick={onCopy} title="Будет скопированна сслыка на игру">Скопировать ссылку на расклад</button>
+    <button onclick={onCopy} title="Будет скопированна сслыка на игру">Скопировать ссылку на задачу</button>
   </div>
 </div>
