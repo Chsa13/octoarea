@@ -1,5 +1,9 @@
 <style>
   .rules{
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center; */
+    padding-top: 30px;
     text-align: start;
     padding-bottom: 8px;
     min-width: 300px;

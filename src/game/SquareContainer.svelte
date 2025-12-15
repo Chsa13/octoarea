@@ -64,6 +64,7 @@
     if (!ctx || !resetToken) return;
     resetToken;
     clear(canvas);
+    handleSquare(0)
     cells = clearTargetCells(cells);
     drawByCells(canvas, cells);
   });
@@ -154,7 +155,6 @@ function onPointerMove(event: MouseEvent | TouchEvent){
   onmousedown={onPointerDown}
   onmousemove={onPointerMove}
   onmouseup={onPointerUp}
-  onmouseleave={onPointerUp}
   ontouchstart={onPointerDown}
   ontouchmove={onPointerMove}
   ontouchend={onPointerUp}

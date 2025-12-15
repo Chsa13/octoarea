@@ -30,20 +30,22 @@ button:active{
   transform: translateY(1px);
 }
 .cont{
+  margin: 0 auto;
+  width: max-content;
   display: flex;
   flex-direction: column;
-  width: 100%;
+  /* width: 100%; */
 }
 .row{
-  width: 100%;
-  justify-content: space-evenly;
+  /* width: 100%; */
+  justify-content: space-between;
   display: flex;
   padding-bottom: 8px;
 }
 </style>
 <div class="cont">
   <div class="row">
-    <button onclick={onReset}>Отчистить</button>
+    <button onclick={onReset}>Очистить</button>
     <button onclick={onNew}>Новая игра</button>
   </div>
   <div class="row">
