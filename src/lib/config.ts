@@ -38,7 +38,7 @@ export function createConfig(): Config {
       name:"Чернов Семён",
     },
     license: {
-      name: "MIT",
+      name: "MIT License",
       url: "https://opensource.org/licenses/MIT",
     },
     fieldWidth,
