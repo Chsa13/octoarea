@@ -94,6 +94,7 @@ function onPointerDown(event: MouseEvent | TouchEvent){
   dragging = false;
   for(let TargetCell of TargetCells){
       if (cellsEquality(TargetCell, draggnigCell)){
+        canvas.style.cursor = "grabbing"
         dragging = true; 
         break;
       }
@@ -102,6 +103,7 @@ function onPointerDown(event: MouseEvent | TouchEvent){
 function onPointerUp(event: MouseEvent | TouchEvent){
   if (draggnigCell) draggnigCell = null;
   if (dragging) dragging = false
+  canvas.style.cursor = "pointer"
 }
 function onPointerMove(event: MouseEvent | TouchEvent){
   if (!draggnigCell || !dragging) return
