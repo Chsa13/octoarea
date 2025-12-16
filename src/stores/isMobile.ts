@@ -1,7 +1,7 @@
 import { readable, type Readable } from 'svelte/store';
 
 export const isMobile: Readable<boolean> = readable(false, (set) => {
-  const mq: MediaQueryList = window.matchMedia('(max-width: 950px)');
+  const mq: MediaQueryList = window.matchMedia('(max-width: 950px), (orientation: portrait)');
 
   set(mq.matches);
 
