@@ -58,7 +58,7 @@
   </div>
   <div class="author-content">
     <p>© 2025 {config.author.name}
-      <a href={config.license.url} target="_blank" rel="noopener noreferrer">{config.license.name}</a>.
+      <a href={config.license.url} target="_blank" rel="noopener noreferrer">{config.license.name}.</a>
     </p>
     <ul class="social-links"><span>Контакты:</span>
       <li>
