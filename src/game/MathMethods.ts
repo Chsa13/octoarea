@@ -147,7 +147,7 @@ export function GetMaxSquare(cells: Cells): number{
   const ForbiddenCells = GetForbiddenCells(cells);
   const w = config.fieldWidth
   const h = config.fieldHeight
-  let ans: number = h*w/2/ForbiddenCells.length;
+  let ans: number =  (h-1)*(w-1)/2/ForbiddenCells.length;
   let dots: FieldCoordinate[]=[];
   for(let a=0; a < w*h; a++){
   if ((w-1)*(h-(~~a/w)) <= 2*ans) {
