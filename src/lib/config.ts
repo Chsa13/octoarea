@@ -26,7 +26,7 @@ export function createConfig(): Config {
     ? Math.floor(
         Math.min(
           (window.innerWidth - (get(isMobile) ? 60 : 360)) / fieldWidth,
-          ((window.innerHeight-260) / fieldHeight)
+          ((window.innerHeight-275) / fieldHeight)
         )
       )
     : 35;
