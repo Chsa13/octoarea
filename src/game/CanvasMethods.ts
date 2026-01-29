@@ -67,11 +67,11 @@ export function drawField(canvas:HTMLCanvasElement){
   };
   const rect = canvas.getBoundingClientRect();
   const cellSize = canvas.width / 16;
-  ctx.fillStyle = "rgb(182, 216, 255)";
+  ctx.fillStyle = "rgb(222, 243, 255)";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   for (let y = 0; y<=config.fieldHeight; y++){
     const py = y * cellSize;
-    ctx.strokeStyle = "#093061"
+    ctx.strokeStyle = "#031022"
     ctx.lineWidth = config.lineWidth;
     ctx.beginPath();
     ctx.moveTo(0, py);
@@ -80,7 +80,7 @@ export function drawField(canvas:HTMLCanvasElement){
   };
   for (let x = 0; x<=config.fieldWidth; x++){
     const px = x * cellSize;
-    ctx.strokeStyle = "#093061"
+    ctx.strokeStyle = "#031022"
     ctx.lineWidth = config.lineWidth;
     ctx.beginPath();
     ctx.moveTo(px, 0);
@@ -146,8 +146,8 @@ export function drawTriangel(canvas: HTMLCanvasElement, fcoord1:FieldCoordinate,
   let color = "";
   if (type){
     if (type == "max"){color = 'rgba(66, 192, 34, 0.91)'};
-    if (type == "normal"){color = 'rgba(4, 46, 80, 0.5)'};
-    if (type == "forbidden"){color = 'rgba(255, 0, 0, 0.66)'};
+    if (type == "normal"){color = 'rgba(49, 74, 133, 0.5)'};
+    if (type == "forbidden"){color = 'rgba(255, 0, 0, 0.5)'};
     fillTriangel(canvas, fcoord1, fcoord2, fcoord3, color)
   }
   drawLine(canvas, fcoord1, fcoord2);

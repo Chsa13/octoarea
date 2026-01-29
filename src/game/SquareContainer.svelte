@@ -35,8 +35,8 @@
     drawByCells(canvas, cells);
   }
   onMount(()=>{
-    const minSize = Math.min(window.innerWidth, window.innerHeight);
-    ctx = setupCanvas(canvas, minSize*2, minSize*2);
+    const Size = window.innerHeight;
+    ctx = setupCanvas(canvas, Size*2, Size*2);
     if (!ctx){
       return;
     };
@@ -167,7 +167,7 @@ function onPointerMove(event: MouseEvent | TouchEvent){
 
 <style>
   canvas{
-    border: 2px solid #093061;
+    border: 2px solid #031022;
     touch-action: none; /* запрещает скролл/зум/refresh жестами над канвой */
     height: calc(100vh - 315px);
   }

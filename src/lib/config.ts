@@ -28,6 +28,6 @@ export const config: Config = {
   },
   fieldWidth:16,
   fieldHeight:16,
-  lineWidth: 4,
-  pointWidth: 8,
+  lineWidth: 6,
+  pointWidth: 10,
 };;
