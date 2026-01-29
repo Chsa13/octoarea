@@ -3,7 +3,7 @@
 </script>
 <style>
   header{
-    font-family: 'Courier New', Courier, monospace;
+    font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
     height: 120px;
     font-size: var(--font-size-xxl);
     font-weight: 600;
