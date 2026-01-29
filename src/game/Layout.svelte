@@ -9,7 +9,7 @@
 <style>
   .layout{
     min-height: 100vh;
-    background: linear-gradient(-15deg, rgb(219, 234, 254) 0%, rgb(187, 228, 255) 100%);
+    background: linear-gradient(-15deg, rgb(219, 234, 254) 0%, rgb(176, 208, 255) 100%);
   }
   .game-layout{
     width: max-content;
