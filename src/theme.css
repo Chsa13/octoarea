@@ -1,19 +1,4 @@
-:root {
-  --background-gradient: linear-gradient(-15deg, rgb(219, 234, 254) 0%, rgb(176, 208, 255) 100%);
-  --primary-color: #5556b0;
-  --link-color: #646cff;
-  --link-hover-color: #333dfa;
-  --text-color: #000b31;
-  --button-text-color: #cdf8ff;
-  --border-color: rgb(114, 115, 223);
-  --background-game-color: rgb(222, 243, 255);
-  --line-game-color: rgb(0, 0, 0);
-  --f-dot-game-color: rgb(255, 0, 0);
-  --max-triangel-game-color: rgba(66, 192, 34, 0.91);
-  --normal-triangel-color: rgba(49, 74, 133, 0.5);
-  --forbidden-triangel-game-color: rgba(255, 0, 0, 0.5);
-
-
+html {
   --font-family: "Arial", sans-serif;
   --font-weight-normal: 400;
   --line-height-normal: 1.5;
@@ -28,4 +13,20 @@
   --s-3: 12px;
   --s-4: 16px;
   --s-5: 24px;
+}
+html.theme-vanila{
+  --background-color: #EAE7dc;
+  --primary-color: #E85A4F;
+  --secondary-color: #e87f73;
+  --link-color: var(--primary-color);
+  --link-hover-color: var(--secondary-color);
+  --text-color: #3c3b3a;
+  --button-text-color: #f8e4c2;
+  --border-color: var(--secondary-color);
+  --background-game-color: var(--background-color);
+  --line-game-color: #343331;
+  --f-dot-game-color: #E85A4F;
+  --max-triangel-game-color: #a1e84fb5;
+  --normal-triangel-color:  #61543c8e;
+  --forbidden-triangel-game-color: #e8594fb6;
 }
