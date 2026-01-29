@@ -5,7 +5,7 @@
 <style>
   p{
     text-align: start;
-    min-width: 300px;
+    min-width: 350px;
     font-size: var(--font-size-normal);
   }
   p.mobile{
@@ -14,7 +14,7 @@
 </style>
 
 <p class:mobile={$isMobile}>
-  <span><b>Цель:</b> построить треугольник c наибольшей возможной площадью.</span><br>
+  <span><b>Цель:</b> построить треугольник c максимальной площадью.</span><br>
   <span><b>Правило:</b> красные точки не должны лежать внутри треугольника.</span><br>
   <span><b>Как играть:</b> ставь 3 точки на поле и двигай их.</span><br>
 </p>
