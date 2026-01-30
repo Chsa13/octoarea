@@ -10,28 +10,28 @@
 </script>
 <style>
   button{
-  border: 2px solid var(--border-color);
-  border-radius: 3px;
-  color: var(--button-text-color);
-  background-color: var(--primary-color);
-
-  box-shadow: 0 1px 0 rgba(0,0,0,.18), 0 6px 18px rgba(0,0,0,.18);
-
-
-  font-family: var(--font-family);
-  font-size: var(--font-size-small);
-  font-weight: var(--font-weight-normal);
-  letter-spacing: var(--letter-spacing);
-  line-height: var(--line-height-normal);
-  padding: var(--s-1) var(--s-3);
-
-  cursor: pointer;
-  user-select: none;
-
-}
-button:active{
-  transform: translateY(1px);
-}
+    border: 2px solid var(--border-color);
+    border-radius: 3px;
+    color: var(--button-text-color);
+    background-color: var(--button-color);
+    
+    font-family: var(--font-family);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-normal);
+    letter-spacing: var(--letter-spacing);
+    line-height: var(--line-height-normal);
+    padding: var(--s-1) var(--s-3);
+    
+    cursor: pointer;
+    user-select: none;
+  
+  }
+  button:hover{
+    background-color: var(--button-hover-color);
+  }
+  button:active{
+    transform: translateY(1px);
+  }
 </style>
 <button onclick={onclick} title={title}>
   {@render children()}

@@ -49,11 +49,11 @@
     cells = generateCells();
     cells = GenerateForbiddenCells(cells, 16, key);
     const ForbiddenCells = GetForbiddenCells(cells);
-      for (let ForbiddenCell in ForbiddenCells){
-      const x = ForbiddenCells[ForbiddenCell].x
-      const y = ForbiddenCells[ForbiddenCell].y
-      ForbiddenCells[ForbiddenCell].x = y
-      ForbiddenCells[ForbiddenCell].y = x
+      for (let ForbiddenCell of ForbiddenCells){
+      const x = ForbiddenCell.x
+      const y = ForbiddenCell.y
+      ForbiddenCell.x = y
+      ForbiddenCell.y = x
     }
     const code = encodePoints(ForbiddenCells);
     handleSquare(0);
@@ -100,18 +100,18 @@ function handleCanvasClick(event:MouseEvent, canvas:HTMLCanvasElement, cells:Cel
   }
 };
 let dragging = false;
-let draggnigCell: FieldCoordinate | null;
+let draggingCell: FieldCoordinate | null;
 function onPointerDown(event: MouseEvent | TouchEvent){
   if (isMouseEvent(event)){
     if (!(event.buttons & 1)){
       onPointerUp(event);
     }
   }
-  draggnigCell = getFieldCoordinateFromEvent(event, canvas);
+  draggingCell = getFieldCoordinateFromEvent(event, canvas);
   const TargetCells = GetTargetCells(cells);
   dragging = false;
   for(let TargetCell of TargetCells){
-      if (cellsEquality(TargetCell, draggnigCell)){
+      if (cellsEquality(TargetCell, draggingCell)){
         canvas.style.cursor = "grabbing"
         dragging = true; 
         break;
@@ -119,7 +119,7 @@ function onPointerDown(event: MouseEvent | TouchEvent){
   }
 }
 function onPointerUp(event: MouseEvent | TouchEvent){
-  if (draggnigCell) draggnigCell = null;
+  if (draggingCell) draggingCell = null;
   if (dragging) {
     dragging = false
     canvas.style.cursor = "grab"
@@ -143,18 +143,18 @@ function onPointerMove(event: MouseEvent | TouchEvent){
   }
   if (dragging){canvas.style.cursor = "grabbing"} 
   else if (!fl){canvas.style.cursor="default"}
-  if (!cellsEquality(draggnigCell, currentCell)){
+  if (!cellsEquality(draggingCell, currentCell)){
     for(let TargetCell of TargetCells){
       if (cellsEquality(TargetCell, currentCell)){return}
     }
     for(let ForbiddenCell of ForbiddenCells){
       if (cellsEquality(ForbiddenCell, currentCell)){return}
     }
-    if (!draggnigCell || !dragging) return
-    cells[draggnigCell.y][draggnigCell.x] = ""
+    if (!draggingCell || !dragging) return
+    cells[draggingCell.y][draggingCell.x] = ""
     cells[currentCell.y][currentCell.x] = "1"
-    draggnigCell.x = currentCell.x
-    draggnigCell.y = currentCell.y
+    draggingCell.x = currentCell.x
+    draggingCell.y = currentCell.y
     clear(canvas)
     drawByCells(canvas, cells);
     Count()
